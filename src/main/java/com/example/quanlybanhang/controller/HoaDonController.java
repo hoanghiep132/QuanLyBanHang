@@ -16,26 +16,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/hoa-don")
 public class HoaDonController {
-
     @Autowired
     private HoaDonService hoaDonService;
-
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService;
-
     @Autowired
     private KhachHangService khachHangService;
-
     @Autowired
     private NhanVienService nhanVienService;
-
     @Autowired
     private HangHoaService hangHoaService;
 
@@ -80,7 +74,7 @@ public class HoaDonController {
                     return khachHangService.findById(request.getKhachHangId())
                             .map(khachHang -> {
                                 hoaDon.setKhachHang(khachHang);
-//                                hoaDon.setThoiGian(new Date());
+                                hoaDon.setThoiGian(new Date());
                                 hoaDon.setTongTien(request.getTongTien());
                                 hoaDon.setTienKhachTra(request.getTienKhachTra());
                                 hoaDon.setTienTraLaiKhach(request.getTienKhachTra() - request.getTongTien());
@@ -108,7 +102,6 @@ public class HoaDonController {
                                     hdct.setThanhTien(hangHoaOptional.get().getGia() * hdctDTO.getSoLuong());
                                     hoaDonChiTiets.add(hdct);
                                 }
-        
                                 List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietService.saveAll(hoaDonChiTiets);
                                 if(hoaDonChiTietList.isEmpty()){
                                     return ResponseEntity.ok("failed");

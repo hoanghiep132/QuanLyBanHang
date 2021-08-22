@@ -102,6 +102,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         try {
             return Optional.ofNullable(hoaDonRepo.save(hoaDon));
         } catch (Exception ex) {
+            System.out.println("EX : " + ex.getMessage());
             return Optional.empty();
         }
     }
@@ -115,13 +116,11 @@ public class HoaDonServiceImpl implements HoaDonService {
             response.setResult(-1, "nhân viên không tồn tại");
             return response;
         }
-
         Optional<KhachHang> khachHangOptional = khachHangRepo.findById(request.getKhachHangId());
         if(!khachHangOptional.isPresent()){
             response.setResult(-1, "Khách hàng không tồn tại");
             return response;
         }
-
         HoaDon hoaDon = new HoaDon();
         hoaDon.setNhanVien(nhanVienOptional.get());
         hoaDon.setKhachHang(khachHangOptional.get());
